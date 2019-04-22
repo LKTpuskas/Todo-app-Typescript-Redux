@@ -2,7 +2,7 @@ import * as React from 'react';
 import ReactDOM from 'react-dom'
 // import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux'
-import Store from './store/store'
+import Store from './store/Store'
 import App from './components/app/App'
 import * as serviceWorker from './serviceWorker'
 import { Global, css } from '@emotion/core'
