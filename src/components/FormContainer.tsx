@@ -2,43 +2,59 @@
 import React, { Component } from 'react'
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core'
-import { connect } from 'react-redux'
-import { addList, addCard } from '../../actions'
-import Form from '../form'
-import Button from '../button'
+import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
+import { addList } from '../actions/ListActions'
+import { addCard } from '../actions/CardActions'
+import Form from './Form'
+import Button from './Button'
 
-class FormContainer extends Component {
+interface OwnState {
+  open: boolean;
+  text: string;
+}
+
+interface DispatchProps {
+  addList: typeof addList;
+  addCard: typeof addCard;
+}
+
+interface FormContainerProps {
+  listId: number;
+}
+
+type Props = FormContainerProps & DispatchProps;
+
+class FormContainer extends Component<Props, OwnState> {
   state = {
-    open: false
+    open: false,
+    text: ''
   }
 
-  openForm = () => this.setState({ open: true })
+  openCloseForm = (change: boolean) => this.setState({ open: change })
 
-  closeForm = () => this.setState({ open: false })
-
-  handleInputChange = event => this.setState({ text: event.target.value })
+  handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => this.setState({ text: event.target.value })
 
   handleAddList = () => {
-    const { dispatch } = this.props
+    const { addList } = this.props
     const { text } = this.state
 
     if (text) {
       this.setState({
         text: ''
       })
-      dispatch(addList(text))
+      addList(text)
     }
   }
 
   handleAddCard = () => {
-    const { dispatch, ListId } = this.props
+    const { addCard, listId } = this.props
     const { text } = this.state
 
     if (text) {
       this.setState({
         text: ''
       })
-      dispatch(addCard(ListId, text))
+      addCard(listId, text)
     }
   }
 
@@ -52,7 +68,7 @@ class FormContainer extends Component {
     return open ? (
       <Form
         placeholder={placeholder}
-        closeForm={this.closeForm}
+        closeForm={this.openCloseForm(false)}
         value={this.state.text}
         handleInputChange={this.handleInputChange}
         onMouse={onMouse}
@@ -60,7 +76,7 @@ class FormContainer extends Component {
       />
     ) : (
       <Button
-        onClick={this.openForm}
+        onClick={this.openCloseForm(true)}
         css={css`
           opacity: ${list ? 1 : 0.6};
           color: ${list && '#fff'};
@@ -73,4 +89,13 @@ class FormContainer extends Component {
   }
 }
 
-export default connect()(FormContainer)
+const mapStateToProps: MapStateToProps<> = {
+  list: 
+}
+
+const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = {
+  addList,
+  addCard
+};
+
+export default connect(mapDispatchToProps)(FormContainer)

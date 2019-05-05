@@ -1,6 +1,6 @@
-import { CONSTANTS } from '../index'
+import { CONSTANTS } from './ActionConstants'
 
-export const addCard = (ListId, text) => {
+export const addCard = (ListId: number, text: string) => {
   return {
     type: CONSTANTS.ADD_CARD,
     payload: { text, ListId }

@@ -6,7 +6,7 @@ import { CONSTANTS } from '../actions/actionConstants'
 let ListId = 7
 let CardId = 8
 
-interface Cards {
+interface Card {
   id: number;
   text: string;
 }
@@ -14,7 +14,7 @@ interface Cards {
 interface List {
   title: string;
   id: number;
-  cards?: Cards[]
+  cards?: Card[]
 }
 
 const initialState: List[] = []

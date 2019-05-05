@@ -5,8 +5,8 @@ import { css, jsx } from '@emotion/core'
 import { differenceInDays } from 'date-fns'
 import { Draggable } from 'react-beautiful-dnd'
 import PropTypes from 'prop-types'
-import IconDot from '../../assets/icon-dot'
-import IconStar from '../../assets/icon-star'
+// import IconDot from '../../assets/icon-dot'
+// import IconStar from '../../assets/icon-star'
 
 const container = css`
   position: relative;
@@ -32,16 +32,24 @@ const cardTitle = css`
 `
 
 const date = css`
-  font-size: 14px;
-  font-weight: 300;
+font-size: 14px;
+font-weight: 300;
 `
 
 const icons = {
-  overdue: IconDot,
-  'the next 3 days': IconStar
+  overdue: 'put icon here!',
+  'the next 3 days': 'ICON here'
 }
 
-const getDueDateStatus = dueDate => {
+export interface Card {
+  id: number;
+  index: number;
+  title: string;
+  description?: string;
+  dueDate?: string;
+}
+
+const getDueDateStatus = (dueDate: string) => {
   const now = new Date()
   // Here we store our desired difference in days
   // i.e. 3 days is the value we're comparing against
@@ -55,10 +63,11 @@ const getDueDateStatus = dueDate => {
   }
   return 'over 3 days away'
 }
+// {showIcon && <Icon customStyle={icon} />}
 
-const Card = ({ title, id, index, description, dueDate }) => {
+const Card: React.FC<Card> = ({ title, id, index, description, dueDate }) => {
   const status = getDueDateStatus(dueDate)
-  const Icon = icons[status]
+  //const Icon = icons[status]
   const showIcon = status !== 'over 3 days away'
   return (
     <Draggable draggableId={String(id)} index={index}>
@@ -69,7 +78,6 @@ const Card = ({ title, id, index, description, dueDate }) => {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          {showIcon && <Icon customStyle={icon} />}
           <div
             css={css`
               width: 85%;
@@ -96,10 +104,5 @@ Card.defaultProps = {
   dueDate: '2019-04-16'
 }
 
-Card.propTypes = {
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  dueDate: PropTypes.string
-}
 
 export default Card

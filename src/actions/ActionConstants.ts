@@ -1,5 +1,5 @@
-export * from './list-actions'
-export * from './card-actions'
+export * from './ListActions'
+export * from './CardActions'
 
 export const CONSTANTS = {
   ADD_LIST: 'ADD_LIST',
