@@ -21,13 +21,14 @@ padding-bottom: 0.5rem;
 margin-left: 0.5rem;
 `
 
-interface List {
+export interface List {
   listId: number;
   title: string;
   cards: Cards[]
 }
 
 const List: React.FC<List> = ({ title, cards, listId }) => {
+  const list = { title, cards, listId };
   return (
     <Droppable droppableId={String(listId)}>
       {provided => (
@@ -42,12 +43,12 @@ const List: React.FC<List> = ({ title, cards, listId }) => {
               <Card
                 key={card.id}
                 id={card.id}
-                title={card.text}
+                title={card.title}
                 index={index}
               />
             ))}
           {provided.placeholder}
-          <FormContainer ListId={listId} />
+          <FormContainer list={list} listId={list.listId} title={title} cards={cards} />
         </div>
       )}
     </Droppable>

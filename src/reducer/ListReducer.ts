@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux'; 
-import { CONSTANTS } from '../actions/actionConstants'
+import { CONSTANTS } from '../actions/ActionConstants'
 // import { PURGE } from 'redux-persist'
 // import initialData from '../../config/data'
 
@@ -11,9 +11,9 @@ interface Card {
   text: string;
 }
 
-interface List {
+export interface List {
   title: string;
-  id: number;
+  id?: number;
   cards?: Card[]
 }
 

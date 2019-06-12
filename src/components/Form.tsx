@@ -2,7 +2,7 @@
 import React from 'react'
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core'
-import Button from '../button'
+import Button from './Button'
 
 const textArea = css`
   resize: none;
@@ -19,7 +19,16 @@ const container = css`
   padding: 10px;
 `
 
-const Form = ({
+interface Props {
+  placeholder: string;
+  value: string;
+  label: string;
+  closeForm: (close: boolean) => void;
+  handleInputChange(event: React.ChangeEvent<HTMLTextAreaElement>): void;
+  onMouse(): void;
+}
+
+const Form: React.FC<Props> = ({
   placeholder,
   closeForm,
   value,
@@ -31,7 +40,7 @@ const Form = ({
     <div css={container}>
       <textarea
         placeholder={placeholder}
-        onBlur={closeForm}
+        onBlur={() => closeForm}
         autoFocus
         value={value}
         onChange={handleInputChange}

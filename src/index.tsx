@@ -7,7 +7,7 @@ import App from './components/app/App'
 import * as serviceWorker from './serviceWorker'
 import { Global, css } from '@emotion/core'
 
-const { persistor, store } = Store()
+const { store } = Store()
 
 ReactDOM.render(
   <Provider store={store}>

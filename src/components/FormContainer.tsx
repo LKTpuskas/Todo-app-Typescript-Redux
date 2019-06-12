@@ -5,6 +5,7 @@ import { css, jsx } from '@emotion/core'
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
 import { addList } from '../actions/ListActions'
 import { addCard } from '../actions/CardActions'
+import { List } from '../components/List'
 import Form from './Form'
 import Button from './Button'
 
@@ -20,6 +21,7 @@ interface DispatchProps {
 
 interface FormContainerProps {
   listId: number;
+  list: List
 }
 
 type Props = FormContainerProps & DispatchProps;
@@ -32,7 +34,7 @@ class FormContainer extends Component<Props, OwnState> {
 
   openCloseForm = (change: boolean) => this.setState({ open: change })
 
-  handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => this.setState({ text: event.target.value })
+  handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => this.setState({ text: event.target.value })
 
   handleAddList = () => {
     const { addList } = this.props
@@ -68,7 +70,7 @@ class FormContainer extends Component<Props, OwnState> {
     return open ? (
       <Form
         placeholder={placeholder}
-        closeForm={this.openCloseForm(false)}
+        closeForm={() => this.openCloseForm(false)}
         value={this.state.text}
         handleInputChange={this.handleInputChange}
         onMouse={onMouse}
@@ -76,8 +78,8 @@ class FormContainer extends Component<Props, OwnState> {
       />
     ) : (
       <Button
-        onClick={this.openCloseForm(true)}
-        css={css`
+        onClick={() => this.openCloseForm(true)}
+        className={css`
           opacity: ${list ? 1 : 0.6};
           color: ${list && '#fff'};
           background: ${list && 'rgba(0,0,0,.15)'};
@@ -89,13 +91,13 @@ class FormContainer extends Component<Props, OwnState> {
   }
 }
 
-const mapStateToProps: MapStateToProps<> = {
-  list: 
-}
+const mapStateToProps: MapStateToProps<{}, List, {}> =  list => ({
+  list: list
+});
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = {
   addList,
   addCard
 };
 
-export default connect(mapDispatchToProps)(FormContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(FormContainer)

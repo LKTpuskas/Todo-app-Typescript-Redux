@@ -49,12 +49,12 @@ export interface Card {
   dueDate?: string;
 }
 
-const getDueDateStatus = (dueDate: string) => {
+const getDueDateStatus = (dueDate?: string) => {
   const now = new Date()
   // Here we store our desired difference in days
   // i.e. 3 days is the value we're comparing against
   const desiredDifference = -2
-  const difference = differenceInDays(now, dueDate)
+  const difference = differenceInDays(now, dueDate || now)
   if (desiredDifference <= difference && difference <= 0) {
     return 'the next 3 days'
   }
