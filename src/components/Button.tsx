@@ -19,13 +19,13 @@ const button = css`
 interface Props {
   children: string;
   className?: any;
-  onClick?: (change: boolean) => void;
+  onClick?: () => void;
   onMouseDown?: () => void;
 }
 
 const Button: React.FC<Props> = ({children, ...props}) => {
   return (
-    <button className={button && props.className} onClick={() => props.onClick} onMouseDown={props.onMouseDown}>
+    <button className={button && props.className} onClick={props.onClick} onMouseDown={props.onMouseDown}>
       {children}
     </button>
   )

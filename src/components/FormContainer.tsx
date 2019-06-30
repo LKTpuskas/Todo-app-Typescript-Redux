@@ -1,13 +1,15 @@
 // eslint-disable-next-line no-unused-vars
-import React, { Component } from 'react'
 /** @jsx jsx */
+import React, { Component } from 'react'
 import { css, jsx } from '@emotion/core'
 import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
-import { addList } from '../actions/ListActions'
-import { addCard } from '../actions/CardActions'
-import { List } from '../components/List'
+
+import { List } from '../reducer/ListReducer'
 import Form from './Form'
 import Button from './Button'
+// import { isThisHour } from 'date-fns';
+import { addList } from '../actions/ListActions'
+import { addCard } from '../actions/CardActions'
 
 interface OwnState {
   open: boolean;
@@ -15,19 +17,20 @@ interface OwnState {
 }
 
 interface DispatchProps {
-  addList: typeof addList;
-  addCard: typeof addCard;
+  addList?: typeof addList;
+  addCard?: typeof addCard;
 }
 
 interface FormContainerProps {
-  listId: number;
   list: List
+  isList: boolean;
+  hasList?: boolean;
 }
 
 type Props = FormContainerProps & DispatchProps;
 
 class FormContainer extends Component<Props, OwnState> {
-  state = {
+  readonly state: OwnState = {
     open: false,
     text: ''
   }
@@ -44,29 +47,28 @@ class FormContainer extends Component<Props, OwnState> {
       this.setState({
         text: ''
       })
-      addList(text)
+      addList && addList(text)
     }
   }
 
   handleAddCard = () => {
-    const { addCard, listId } = this.props
+    const { addCard, list } = this.props
     const { text } = this.state
-
-    if (text) {
+    if (text && list && list.id) {
       this.setState({
         text: ''
       })
-      addCard(listId, text)
+      addCard && addCard(list.id, text)
     }
   }
 
   render() {
-    const { list } = this.props
+    const { isList, hasList } = this.props
     const { open } = this.state
-    const placeholder = `Enter ${list ? 'list' : 'card'} title`
-    const label = `Add ${list ? 'list' : 'card'}`
-    const onMouse = list ? this.handleAddList : this.handleAddCard
-    const buttonLabel = `+ Add another ${list ? 'list' : 'card'}`
+    const placeholder = `Enter ${isList ? 'list' : 'card'} title`
+    const formLabel = `Add ${isList ? 'list' : 'card'}`
+    const onMouse = isList ? this.handleAddList : this.handleAddCard
+    const buttonLabel = `+ Add another ${isList ? 'list' : 'card'}`
     return open ? (
       <Form
         placeholder={placeholder}
@@ -74,30 +76,34 @@ class FormContainer extends Component<Props, OwnState> {
         value={this.state.text}
         handleInputChange={this.handleInputChange}
         onMouse={onMouse}
-        label={label}
+        label={hasList ? buttonLabel : formLabel}
       />
     ) : (
-      <Button
-        onClick={() => this.openCloseForm(true)}
-        className={css`
-          opacity: ${list ? 1 : 0.6};
-          color: ${list && '#fff'};
-          background: ${list && 'rgba(0,0,0,.15)'};
-        `}
-      >
-        {buttonLabel}
-      </Button>
+        <Button
+          onClick={() => this.openCloseForm(true)}
+          className={css`
+          opacity: ${isList ? 1 : 0.6};
+          color: ${isList && '#fff'};
+          background: ${isList && 'rgba(0,0,0,.15)'};`}>
+          {hasList ?  buttonLabel : formLabel}
+        </Button>
     )
   }
 }
 
+/* className={css`
+opacity: ${isList ? 1 : 0.6};
+color: ${isList && '#fff'};
+background: ${isList && 'rgba(0,0,0,.15)'};
+`} */
+
 const mapStateToProps: MapStateToProps<{}, List, {}> =  list => ({
-  list: list
+  list
 });
 
-const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = {
+/* const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = {
   addList,
   addCard
-};
+}; */
 
-export default connect(mapStateToProps, mapDispatchToProps)(FormContainer)
+export default connect(mapStateToProps)(FormContainer)

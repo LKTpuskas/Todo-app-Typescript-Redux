@@ -1,10 +1,11 @@
 // eslint-disable-next-line no-unused-vars
-import React from 'react'
+import * as React from 'react'
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core'
 import { differenceInDays } from 'date-fns'
 import { Draggable } from 'react-beautiful-dnd'
 import PropTypes from 'prop-types'
+import { Card as CardType } from '../reducer/ListReducer'
 // import IconDot from '../../assets/icon-dot'
 // import IconStar from '../../assets/icon-star'
 
@@ -41,13 +42,13 @@ const icons = {
   'the next 3 days': 'ICON here'
 }
 
-export interface Card {
+/* export interface Card {
   id: number;
   index: number;
   title: string;
   description?: string;
   dueDate?: string;
-}
+} */
 
 const getDueDateStatus = (dueDate?: string) => {
   const now = new Date()
@@ -65,7 +66,7 @@ const getDueDateStatus = (dueDate?: string) => {
 }
 // {showIcon && <Icon customStyle={icon} />}
 
-const Card: React.FC<Card> = ({ title, id, index, description, dueDate }) => {
+const Card: React.FC<CardType> = ({ title, id, index, description, dueDate }) => {
   const status = getDueDateStatus(dueDate)
   //const Icon = icons[status]
   const showIcon = status !== 'over 3 days away'

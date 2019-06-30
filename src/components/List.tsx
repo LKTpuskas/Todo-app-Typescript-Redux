@@ -4,7 +4,8 @@ import React from 'react'
 import { css, jsx } from '@emotion/core'
 import { Droppable } from 'react-beautiful-dnd'
 import PropTypes from 'prop-types'
-import Card, { Card as Cards } from './Card'
+import Card from './Card'
+import { List as ListType } from './../reducer/ListReducer'
 import FormContainer from './FormContainer'
 
 const container = css`
@@ -21,13 +22,13 @@ padding-bottom: 0.5rem;
 margin-left: 0.5rem;
 `
 
-export interface List {
+interface OwnProps { 
   listId: number;
-  title: string;
-  cards: Cards[]
 }
 
-const List: React.FC<List> = ({ title, cards, listId }) => {
+type Props = ListType & OwnProps;
+
+const List: React.FC<Props> = ({ title, cards, listId }) => {
   const list = { title, cards, listId };
   return (
     <Droppable droppableId={String(listId)}>
@@ -48,7 +49,7 @@ const List: React.FC<List> = ({ title, cards, listId }) => {
               />
             ))}
           {provided.placeholder}
-          <FormContainer list={list} listId={list.listId} title={title} cards={cards} />
+          <FormContainer title="" isList={false} list={list}/>
         </div>
       )}
     </Droppable>

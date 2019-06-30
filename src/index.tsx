@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ReactDOM from 'react-dom'
+import * as ReactDOM from "react-dom";
 // import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux'
 import Store from './store/Store'
@@ -22,7 +22,7 @@ ReactDOM.render(
           }
         `}
       />
-      <App />
+      <App title={''}/>
 {/*     </PersistGate> */}
   </Provider>,
   document.getElementById('root')
