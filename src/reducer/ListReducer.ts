@@ -9,7 +9,7 @@ let CardId = 8
 export interface Card {
   id: number;
   index: number;
-  title: string;
+  text: string;
   description?: string;
   dueDate?: string;
 }

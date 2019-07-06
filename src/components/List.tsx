@@ -6,7 +6,7 @@ import { Droppable } from 'react-beautiful-dnd'
 import PropTypes from 'prop-types'
 import Card from './Card'
 import { List as ListType } from './../reducer/ListReducer'
-import FormContainer from './FormContainer'
+import FormContainer, { DispatchProps } from './FormContainer'
 
 const container = css`
 background-color: #dfe3e6;
@@ -22,16 +22,16 @@ padding-bottom: 0.5rem;
 margin-left: 0.5rem;
 `
 
-interface OwnProps { 
-  listId: number;
+interface OwnProps {
+  listId?: number;
 }
 
-type Props = ListType & OwnProps;
+type Props = ListType & OwnProps & DispatchProps;
 
-const List: React.FC<Props> = ({ title, cards, listId }) => {
-  const list = { title, cards, listId };
+const List: React.FC<Props> = ({ title, cards, id, listId, addCard, addList }) => {
+  const list = { title, cards, id: listId };
   return (
-    <Droppable droppableId={String(listId)}>
+    <Droppable droppableId={String(id)}>
       {provided => (
         <div
           css={container}
@@ -44,20 +44,16 @@ const List: React.FC<Props> = ({ title, cards, listId }) => {
               <Card
                 key={card.id}
                 id={card.id}
-                title={card.title}
+                text={card.text}
                 index={index}
               />
             ))}
           {provided.placeholder}
-          <FormContainer title="" isList={false} list={list}/>
+          <FormContainer isList={false} list={list} addCard={addCard} addList={addList}/>
         </div>
       )}
     </Droppable>
   )
-}
-
-List.defaultProps = {
-  title: "Hey! I'm your default list name"
 }
 
 export default List

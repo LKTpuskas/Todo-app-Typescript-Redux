@@ -93,7 +93,7 @@ class App extends Component<Props> {
   }
 
   render() {
-    const { lists } = this.props
+    const { lists, addCard, addList } = this.props
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <div css={container}>
@@ -104,23 +104,24 @@ class App extends Component<Props> {
           {/* <button onClick={this.onPurgeStoredState}>{'Reset state'}</button> */}
           <div className={listsContainer.styles}>
             {lists &&
-              lists.map((list: List) => {
+              lists.map((list: ListType) => {
                 return (
                   <List
                     key={list.id}
                     title={list.title}
                     cards={list.cards}
                     listId={list.id}
+                    addCard={addCard}
+                    addList={addList}
                   />
                 )
               })}
             <FormContainer 
-              title={''}
               isList={true} 
               hasList={lists && lists.length !== 0}
               list={{ title: ''}}
-              addCard={this.props.addCard}
-              addList={this.props.addList}
+              addCard={addCard}
+              addList={addList}
             />
           </div>
         </div>

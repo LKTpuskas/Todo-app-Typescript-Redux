@@ -16,14 +16,15 @@ interface OwnState {
   text: string;
 }
 
-interface DispatchProps {
-  addList?: typeof addList;
-  addCard?: typeof addCard;
+export interface DispatchProps {
+  addList: typeof addList;
+  addCard: typeof addCard;
 }
 
 interface FormContainerProps {
   list: List
   isList: boolean;
+  listId?: number;
   hasList?: boolean;
 }
 
@@ -40,9 +41,8 @@ class FormContainer extends Component<Props, OwnState> {
   handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => this.setState({ text: event.target.value })
 
   handleAddList = () => {
-    const { addList } = this.props
+    const { addList, addCard } = this.props
     const { text } = this.state
-
     if (text) {
       this.setState({
         text: ''
@@ -52,12 +52,10 @@ class FormContainer extends Component<Props, OwnState> {
   }
 
   handleAddCard = () => {
-    const { addCard, list } = this.props
+    const { list, addCard } = this.props
     const { text } = this.state
     if (text && list && list.id) {
-      this.setState({
-        text: ''
-      })
+      this.setState({ text: '' })
       addCard && addCard(list.id, text)
     }
   }
@@ -67,7 +65,7 @@ class FormContainer extends Component<Props, OwnState> {
     const { open } = this.state
     const placeholder = `Enter ${isList ? 'list' : 'card'} title`
     const formLabel = `Add ${isList ? 'list' : 'card'}`
-    const onMouse = isList ? this.handleAddList : this.handleAddCard
+    const onMouse = !isList ? this.handleAddCard : this.handleAddList
     const buttonLabel = `+ Add another ${isList ? 'list' : 'card'}`
     return open ? (
       <Form
@@ -97,13 +95,13 @@ color: ${isList && '#fff'};
 background: ${isList && 'rgba(0,0,0,.15)'};
 `} */
 
-const mapStateToProps: MapStateToProps<{}, List, {}> =  list => ({
+/* const mapStateToProps: MapStateToProps<{}, List, {}> =  list => ({
   list
-});
+}); */
 
 /* const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = {
   addList,
   addCard
 }; */
 
-export default connect(mapStateToProps)(FormContainer)
+export default FormContainer;

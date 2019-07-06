@@ -66,7 +66,7 @@ const getDueDateStatus = (dueDate?: string) => {
 }
 // {showIcon && <Icon customStyle={icon} />}
 
-const Card: React.FC<CardType> = ({ title, id, index, description, dueDate }) => {
+const Card: React.FC<CardType> = ({ text, id, index, description, dueDate }) => {
   const status = getDueDateStatus(dueDate)
   //const Icon = icons[status]
   const showIcon = status !== 'over 3 days away'
@@ -84,7 +84,7 @@ const Card: React.FC<CardType> = ({ title, id, index, description, dueDate }) =>
               width: 85%;
             `}
           >
-            <h2 css={cardTitle}>{title}</h2>
+            <h2 css={cardTitle}>{text}</h2>
             <p
               css={css`
                 margin-bottom: 1rem;
@@ -99,11 +99,5 @@ const Card: React.FC<CardType> = ({ title, id, index, description, dueDate }) =>
     </Draggable>
   )
 }
-Card.defaultProps = {
-  title: "Hey! I'm your default title",
-  description: "Hello! I'm your default description",
-  dueDate: '2019-04-16'
-}
-
 
 export default Card
