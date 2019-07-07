@@ -1,7 +1,5 @@
 import { AnyAction, ReducersMapObject, Reducer, Action } from 'redux'; 
 import { CONSTANTS } from '../actions/ActionConstants'
-// import { PURGE } from 'redux-persist'
-// import initialData from '../../config/data'
 
 let ListId = 7
 let CardId = 8
@@ -24,9 +22,6 @@ const initialState: List[] = []
 
 const listsReducer: ReducersMapObject = {
   [CONSTANTS.ADD_LIST](state: List[], action: AnyAction) {
-    // A new list starts with an empty cards array
-    // increment a list id by one, so it's unique
-    // spead our current lists (initial data) and add new lists
     const { title } = action.payload
     const newList = {
       title,
@@ -44,10 +39,6 @@ const listsReducer: ReducersMapObject = {
     }
     CardId += 1
 
-    // Map over lists, see if their id is the same as the payload id
-    // spead the lists array, as well as current cards (initial state)
-    // add the new cards at the end
-    // so we don't modify the existing state
     const newState = state.map(list => {
       if (list.id === ListId) {
         return {
@@ -79,7 +70,6 @@ const listsReducer: ReducersMapObject = {
 
         list.cards.splice(droppableIndexEnd, 0, ...card)
       }
-      // return newState
     }
 
     // if cards are moved between lists

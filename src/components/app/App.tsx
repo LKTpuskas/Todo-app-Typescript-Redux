@@ -1,23 +1,19 @@
 /** @jsx jsx */
 // CRA-specific rules: eslint and emotion / jsx 
 // eslint-disable-next-line no-unused-vars
-import React, { Component } from 'react'
-import { bindActionCreators, Dispatch} from 'redux'
-/** @jsx jsx */
+import { Component } from 'react'
 import { css, jsx } from '@emotion/core'
-// import { PURGE } from 'redux-persist'
-import { DragDropContext } from 'react-beautiful-dnd'
+import { DragDropContext, DropResult } from 'react-beautiful-dnd'
 import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux'
 import List from '../List'
 import { List as ListType } from '../../reducer/ListReducer'
 import FormContainer from '../FormContainer'
 import { dnd } from '../../actions/ListActions'
-import { CONSTANTS } from '../../actions/ActionConstants'
 import { addList } from '../../actions/ListActions'
 import { addCard } from '../../actions/CardActions'
 
 const container = css`
-  background: #b69cce;
+  background: #181818f0;
   min-height: 100vh;
   padding: 1rem;
 `
@@ -27,6 +23,7 @@ const header = css`
   justify-content: center;
   padding-top: 1rem;
   margin-bottom: 3rem;
+  color: #3e8562;
 `
 
 const listsContainer = css`
@@ -49,26 +46,8 @@ class App extends Component<Props> {
   // Enables us to reset the state
   // in the context of local storage,
   // useful for development purposes
-  /* onPurgeStoredState = event => {
-    event.preventDefault()
-
-    // Grab a ref to the mapped dispatch method
-    const { dispatch } = this.props
-
-    // Create and dispatch the action
-    // which will cause redux-persist to purge
-    dispatch({
-      type: PURGE,
-      // Whatever you chose for the "key" value when initialising redux-persist
-      // in the **persistCombineReducers** method - e.g. "root"
-      key: 'myStorageKey',
-      // Func expected on the submitted action
-      result: () => null
-    })
-  }
- */
   // Our logic for card dragging and dropping
-  onDragEnd = (result: any) => {
+  onDragEnd = (result: DropResult) => {
     const { destination, source } = result
     const { dnd } = this.props
 
@@ -98,11 +77,11 @@ class App extends Component<Props> {
       <DragDropContext onDragEnd={this.onDragEnd}>
         <div css={container}>
           <header css={header}>
-            <h1>{'My Awesome Board 💥'}</h1>
+            <h1>{'Trello board 🐐'}</h1>
           </header>
           {/* Use the below button to reset the app if needed, for development purposes  */}
           {/* <button onClick={this.onPurgeStoredState}>{'Reset state'}</button> */}
-          <div className={listsContainer.styles}>
+          <div css={listsContainer}>
             {lists &&
               lists.map((list: ListType) => {
                 return (
@@ -139,10 +118,6 @@ const mapDispatchToProps: MapDispatchToProps<AppDispatchProps, {}> = {
   addCard,
   dnd
 }
-
-/* export const mapDispatchToProps = (dispatch: Dispatch): any  => ({
-  dnd: dispatch({ type: CONSTANTS.DRAG_ENDED})
-}); */
 
 export default connect(
   mapStateToProps,

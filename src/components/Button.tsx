@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react'
 /** @jsx jsx */
-import { css, jsx, ClassNames } from '@emotion/core'
+import { css, jsx } from '@emotion/core'
 
 const button = css`
   display: flex;
@@ -14,18 +14,23 @@ const button = css`
   box-shadow: 0 1px 0 0 #808080;
   font-size: 16px;
   white-space: nowrap;
+  color: #646464;
+  background: #FFEB3B;
+  &:focus {
+    box-shadow: 0 0 4pt 1pt #358564c7;
+    outline: none;
+  }
 `
 
 interface Props {
   children: string;
-  className?: any;
   onClick?: () => void;
   onMouseDown?: () => void;
 }
 
 const Button: React.FC<Props> = ({children, ...props}) => {
   return (
-    <button className={button && props.className} onClick={props.onClick} onMouseDown={props.onMouseDown}>
+    <button css={button} onClick={props.onClick} onMouseDown={props.onMouseDown}>
       {children}
     </button>
   )

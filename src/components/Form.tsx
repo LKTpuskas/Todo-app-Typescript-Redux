@@ -12,11 +12,15 @@ const textArea = css`
   border: none;
   padding: 0.5rem;
   margin-bottom: 0.5rem;
+  background: black;
+  color: #8f8f8f;
 `
 
 const container = css`
   min-height: auto;
   padding: 10px;
+  background: #353535;
+  border-radius: 5px;
 `
 
 interface Props {

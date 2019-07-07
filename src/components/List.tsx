@@ -3,18 +3,17 @@ import React from 'react'
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core'
 import { Droppable } from 'react-beautiful-dnd'
-import PropTypes from 'prop-types'
 import Card from './Card'
 import { List as ListType } from './../reducer/ListReducer'
 import FormContainer, { DispatchProps } from './FormContainer'
 
 const container = css`
-background-color: #dfe3e6;
-border-radius: 3px;
+background-color: #646464;
+border-radius: 5px;
 width: 350px;
 padding: 14px;
 height: 100%;
-margin: 0 8px 0 0;
+margin: 8px 8px 8px 0;
 `
 
 const listTitle = css`
@@ -31,7 +30,7 @@ type Props = ListType & OwnProps & DispatchProps;
 const List: React.FC<Props> = ({ title, cards, id, listId, addCard, addList }) => {
   const list = { title, cards, id: listId };
   return (
-    <Droppable droppableId={String(id)}>
+    <Droppable droppableId={String(listId)}>
       {provided => (
         <div
           css={container}

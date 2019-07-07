@@ -2,12 +2,10 @@
 /** @jsx jsx */
 import React, { Component } from 'react'
 import { css, jsx } from '@emotion/core'
-import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
 
 import { List } from '../reducer/ListReducer'
 import Form from './Form'
 import Button from './Button'
-// import { isThisHour } from 'date-fns';
 import { addList } from '../actions/ListActions'
 import { addCard } from '../actions/CardActions'
 
@@ -41,7 +39,7 @@ class FormContainer extends Component<Props, OwnState> {
   handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => this.setState({ text: event.target.value })
 
   handleAddList = () => {
-    const { addList, addCard } = this.props
+    const { addList } = this.props
     const { text } = this.state
     if (text) {
       this.setState({
@@ -78,30 +76,11 @@ class FormContainer extends Component<Props, OwnState> {
       />
     ) : (
         <Button
-          onClick={() => this.openCloseForm(true)}
-          className={css`
-          opacity: ${isList ? 1 : 0.6};
-          color: ${isList && '#fff'};
-          background: ${isList && 'rgba(0,0,0,.15)'};`}>
+          onClick={() => this.openCloseForm(true)}>
           {hasList ?  buttonLabel : formLabel}
         </Button>
     )
   }
 }
-
-/* className={css`
-opacity: ${isList ? 1 : 0.6};
-color: ${isList && '#fff'};
-background: ${isList && 'rgba(0,0,0,.15)'};
-`} */
-
-/* const mapStateToProps: MapStateToProps<{}, List, {}> =  list => ({
-  list
-}); */
-
-/* const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = {
-  addList,
-  addCard
-}; */
 
 export default FormContainer;
