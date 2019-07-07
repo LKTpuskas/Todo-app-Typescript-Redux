@@ -8,10 +8,10 @@ export const addList = (title: string) => {
 }
 
 export const dnd = (
-  droppableIdStart: any,
-  droppableIdEnd: any,
-  droppableIndexStart: any,
-  droppableIndexEnd: any
+  droppableIdStart: string,
+  droppableIdEnd: string,
+  droppableIndexStart: number,
+  droppableIndexEnd: number
 ) => {
   return {
     type: CONSTANTS.DRAG_ENDED,
